@@ -34,7 +34,7 @@ final class ServiceHotelBooking
 	public function __invoke()
 	{
 		try {
-			$response = $this->response->getBody();
+			$response = $this->response->getBody()->getContents();
 			$response = json_decode( $response, true);
 			$response_book = $response['booking'];
 			$response_book['raw_response'] = $response;
