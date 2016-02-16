@@ -1,6 +1,7 @@
 <?php namespace StayForLong\HotelBeds;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 
 class ServiceRequest
 {
@@ -70,7 +71,7 @@ class ServiceRequest
 			];
 
 			$headers = array_merge($headers, $this->headers);
-;
+
 			$client = new Client();
 			$response = $client->request(
 				$method,
@@ -81,8 +82,16 @@ class ServiceRequest
 
 			return $response;
 
+		} catch (ClientException $e) {
+			$response = $e->getResponse()->getBody()->getContents();
+			throw new ServiceRequestException( $response );
 		} catch (\Exception $e) {
-			throw new ServiceRequestException($e->getMessage());
+			$response = $e->getMessage();
+			if( method_exists($e->getResponse(), "getBody") )
+			{
+				$response = $e->getResponse()->getBody()->getContents();
+			}
+			throw new ServiceRequestException($response);
 		}
 	}
 
