@@ -1,18 +1,17 @@
 <?php namespace StayForLong\HotelBeds;
 
 use StayForLong\HotelBeds\Contracts\HolderInterface;
-use StayForLongApi\Utils\SearchEngine;
 
 /**
  * Class Holder
  * @package StayForLong\HotelBeds
  *
-"holder": {
-	"name": "IntegrationTestFirstName",
-	"surname": "IntegrationTestLastName"
-},
+ * "holder": {
+ * "name": "IntegrationTestFirstName",
+ * "surname": "IntegrationTestLastName"
+ * },
  */
-class Holder implements HolderInterface
+final class Holder implements HolderInterface
 {
 	private $first_name;
 	private $last_name;
@@ -29,19 +28,20 @@ class Holder implements HolderInterface
 		return $this;
 	}
 
-	public function getFirstName(){
+	public function getFirstName()
+	{
 		return $this->first_name;
 	}
 
-	public function getLastName(){
+	public function getLastName()
+	{
 		return $this->last_name;
 	}
-
 
 	public function getHolderData()
 	{
 		return [
-			"name" => $this->first_name,
+			"name"    => $this->first_name,
 			"surname" => $this->last_name,
 		];
 	}

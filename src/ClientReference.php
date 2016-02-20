@@ -1,17 +1,9 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: raul
- * Date: 24/11/15
- * Time: 17:22
- */
-
-namespace StayForLong\HotelBeds;
+<?php namespace StayForLong\HotelBeds;
 
 
 use StayForLong\HotelBeds\Contracts\ClientReferenceInterface;
 
-class ClientReference implements ClientReferenceInterface {
+final class ClientReference implements ClientReferenceInterface {
 	private $comment;
 	private $reference;
 
