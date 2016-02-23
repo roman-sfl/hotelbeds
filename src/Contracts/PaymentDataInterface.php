@@ -10,5 +10,6 @@ interface PaymentDataInterface {
 	public function setEmail($an_contact_email);
 	public function setPhoneNumber($a_contact_phone);
 	public function getPaymentCard();
+	public function getPaymentData();
 	public function getContactData();
 }

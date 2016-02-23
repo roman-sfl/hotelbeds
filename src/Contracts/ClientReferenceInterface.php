@@ -11,4 +11,5 @@
 interface ClientReferenceInterface {
 	public function setComments($a_references);
 	public function getComments();
+	public function getReference();
 }

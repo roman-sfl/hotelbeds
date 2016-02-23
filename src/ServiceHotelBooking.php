@@ -15,7 +15,7 @@ final class ServiceHotelBooking
 	 * @param HolderInterface $holder
 	 * @param RoomsInterface $rooms
 	 * @param ClientReferenceInterface $client_reference
-	 * @param PaymentDataInterface $payment
+	 * @param PaymentDataInterface $payment_data
 	 * @param string $language
 	 * @throws ServiceHotelBookingException
 	 */
@@ -24,7 +24,7 @@ final class ServiceHotelBooking
 		HolderInterface $holder,
 		RoomsInterface $rooms,
 		ClientReferenceInterface $client_reference,
-		PaymentDataInterface $payment,
+		PaymentDataInterface $payment_data,
 		$language = "ENG"
 	) {
 		try {
@@ -32,10 +32,10 @@ final class ServiceHotelBooking
 				"holder"          => $holder->getHolderData(),
 				"rooms"           => $rooms->getRooms(),
 				"clientReference" => $client_reference->getReference(),
-				"language"        => $language,
+				"language"        => $language, // UTF-8 BOM problems when getting data in latin language that have accents.
 			];
 
-			$payment_data = $payment->getPaymentData();
+			$payment_data = $payment_data->getPaymentData();
 			if (!empty($payment_data)) {
 				$this->request_data['paymentData'] = $payment_data;
 			}
@@ -52,10 +52,12 @@ final class ServiceHotelBooking
 	public function __invoke()
 	{
 		try {
-			$response                      = $this->response->getBody()->getContents();
-			$response                      = json_decode($response, true);
+			$raw_response                  = $this->response->getBody()->getContents();
+			$raw_response = mb_convert_encoding($raw_response, 'HTML-ENTITIES', 'UTF-8');
+
+			$response                      = json_decode($raw_response, true);
 			$response_book                 = $response['booking'];
-			$response_book['raw_response'] = $response;
+			$response_book['raw_response'] = $raw_response;
 
 			return $response_book;
 		} catch (ServiceRequestException $e) {

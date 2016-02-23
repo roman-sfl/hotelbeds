@@ -64,6 +64,10 @@ final class PaymentData implements PaymentDataInterface
 
 	public function getPaymentData()
 	{
+		if(empty($this->payment_data)){
+			return [];
+		}
+
 		return [
 			'paymentCard' => $this->payment_data,
 			'contactData' => $this->contact_data,
