@@ -34,6 +34,9 @@ final class PaymentData implements PaymentDataInterface
 
 	public function setExpirationDate($a_expiration_date)
 	{
+		$search = array("/","-",);
+		$replace = array("","",);
+		$a_expiration_date = str_replace($search, $replace, $a_expiration_date);
 		$this->payment_data[self::CARD_EXP_DAY] = $a_expiration_date;
 	}
 

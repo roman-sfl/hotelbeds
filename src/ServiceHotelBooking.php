@@ -45,7 +45,8 @@ final class ServiceHotelBooking
 				->setOptions("bookings")
 				->send("POST");
 		} catch (\Exception $e) {
-			throw new ServiceHotelBookingException($e->getMessage());
+			$request = json_encode($this->request_data, true);
+			throw new ServiceHotelBookingException($e->getMessage() ." - ". $request);
 		}
 	}
 
