@@ -128,7 +128,7 @@ class ServiceRequest
 	 */
 	public function getRequestUrl()
 	{
-		$url = $this->url .= implode("/", $this->options);
+		$url = $this->url . implode("/", $this->options);
 
 		if(!empty($this->params)){
 			$url .= "?" . http_build_query($this->params);
