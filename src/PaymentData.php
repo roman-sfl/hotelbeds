@@ -17,9 +17,27 @@ final class PaymentData implements PaymentDataInterface
 	private $payment_data = [];
 	private $contact_data = [];
 
+	private $card_types = [
+		"AE" => "amex",
+		"DC" => "dinersclub",
+		"MC" => "mastercard",
+//		"AP" => "",
+//		"E6" => "",
+//		"EC" => "",
+		"JC" => "jcb",
+		"MA" => "maestro",
+		"VE" => "visaelectron",
+		"VI" => "visa",
+	];
+
 	public function setCardType($a_card_type)
 	{
-		$this->payment_data['cardType'] = $a_card_type;
+		$card_type = array_search($a_card_type, $this->card_types);
+		if (empty($card_type)) {
+			throw new PaymentDataException("Card type not supported");
+		}
+
+		$this->payment_data['cardType'] = $card_type;
 	}
 
 	public function setCardNumber($a_card_number)
@@ -34,9 +52,9 @@ final class PaymentData implements PaymentDataInterface
 
 	public function setExpirationDate($a_expiration_date)
 	{
-		$search = array("/","-",);
-		$replace = array("","",);
-		$a_expiration_date = str_replace($search, $replace, $a_expiration_date);
+		$search                                 = array("/", "-",);
+		$replace                                = array("", "",);
+		$a_expiration_date                      = str_replace($search, $replace, $a_expiration_date);
 		$this->payment_data[self::CARD_EXP_DAY] = $a_expiration_date;
 	}
 
@@ -67,7 +85,7 @@ final class PaymentData implements PaymentDataInterface
 
 	public function getPaymentData()
 	{
-		if(empty($this->payment_data)){
+		if (empty($this->payment_data)) {
 			return [];
 		}
 
