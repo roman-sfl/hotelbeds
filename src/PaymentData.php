@@ -1,6 +1,5 @@
 <?php namespace StayForLong\HotelBeds;
 
-
 use StayForLong\HotelBeds\Contracts\PaymentDataInterface;
 
 final class PaymentData implements PaymentDataInterface
@@ -42,7 +41,8 @@ final class PaymentData implements PaymentDataInterface
 
 	public function setCardNumber($a_card_number)
 	{
-		$this->payment_data[self::CARD_NUMBER] = $a_card_number;
+		$card_number = str_replace(" ", "", $a_card_number);
+		$this->payment_data[self::CARD_NUMBER] = $card_number;
 	}
 
 	public function setHolderCardName($a_holder_card_name)
@@ -52,8 +52,8 @@ final class PaymentData implements PaymentDataInterface
 
 	public function setExpirationDate($a_expiration_date)
 	{
-		$search                                 = array("/", "-",);
-		$replace                                = array("", "",);
+		$search                                 = array("/", "-", " ",);
+		$replace                                = array("", "", "",);
 		$a_expiration_date                      = str_replace($search, $replace, $a_expiration_date);
 		$this->payment_data[self::CARD_EXP_DAY] = $a_expiration_date;
 	}
@@ -94,4 +94,8 @@ final class PaymentData implements PaymentDataInterface
 			'contactData' => $this->contact_data,
 		];
 	}
+}
+
+final class PaymentDataException extends \Exception{
+
 }
