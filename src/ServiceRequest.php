@@ -63,7 +63,7 @@ class ServiceRequest
 					"Api-Key"     => $this->api_headers['key'],
 					"X-Signature" => $this->api_headers['signature'],
 					"Accept"      => "application/json",
-					"Content-Type" => "application/json",
+					"Content-Type" => "application/json; charset=utf-8",
 					'Accept-Encoding' => "gzip",
 				],
 				'verify'  => false,
