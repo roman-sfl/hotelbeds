@@ -1,5 +1,5 @@
 # PHP HotelBeds APITUDE
-PHP API to interact with Hotel Beds APITUDE, compatible with version 0.2
+PHP API to interact with Hotel Beds APITUDE, compatible with version 1.0
 
 ## Instalation
 composer require stayforlong/hotelbeds
