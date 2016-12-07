@@ -32,6 +32,7 @@ final class ServiceHotelBooking
 				"holder"          => $holder->getHolderData(),
 				"rooms"           => $rooms->getRooms(),
 				"clientReference" => $client_reference->getReference(),
+				"remark" 		  => $client_reference->getComments(),
 				"language"        => $language, // UTF-8 BOM problems when getting data in latin language that have accents.
 			];
 
