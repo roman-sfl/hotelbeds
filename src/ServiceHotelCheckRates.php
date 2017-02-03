@@ -6,13 +6,14 @@ final class ServiceHotelCheckRates
 {
 	private $response;
 
-	public function __construct(ServiceRequest $request, $rate_key)
+	public function __construct(ServiceRequest $request, $rate_key, $upselling = true)
 	{
 		$rate_data =
 			[
 				"rooms" => [
 					0 => [ "rateKey" => $rate_key ]
-				]
+				],
+				"upselling" => $upselling,
 			];
 
 		$this->response = $request
