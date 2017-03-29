@@ -6,13 +6,15 @@ final class ServiceHotelDetail
 
 	/**
 	 * @param ServiceRequest $request
-	 * @param $hotel_code
+	 * @param string $hotel_code
+	 * @param string $language
 	 */
-	public function __construct(ServiceRequest $request, $hotel_code)
+	public function __construct(ServiceRequest $request, $hotel_code, $language = "ENG")
 	{
 		$this->response = $request
 			->setOptions("hotels")
 			->setOptions($hotel_code)
+			->setQueryStringParams(["language" => $language])
 			->send();
 	}
 
@@ -20,7 +22,7 @@ final class ServiceHotelDetail
 	{
 		try {
 			$response = $this->response->getBody();
-			return json_decode( $response, true);
+			return json_decode($response, true);
 		} catch (ServiceRequestException $e) {
 			throw new ServiceHotelDetailException($e->getMessage());
 		}
