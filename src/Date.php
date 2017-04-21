@@ -24,11 +24,19 @@ class Date implements DateInterface
 		$this->date = $date;
 	}
 
-	public function getDate() : string
+	/**
+	 * @return string
+	 */
+	public function getDate()
 	{
 		return $this->date;
 	}
 
+	/**
+	 * @param string $date
+	 * @param string $format
+	 * @return bool
+	 */
 	private function validateDate($date, $format = self::DATE_FORMAT)
 	{
 		$d = DateTime::createFromFormat($format, $date);

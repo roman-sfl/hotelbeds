@@ -6,7 +6,9 @@ namespace StayForLong\HotelBeds\Contracts;
 
 interface PaginationInterface
 {
-	public function getPage() : int;
+	/** @return int */
+	public function getPage();
 
-	public function getPerPage() : int;
+	/** @return int */
+	public function getPerPage();
 }

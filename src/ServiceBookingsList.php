@@ -59,7 +59,11 @@ final class ServiceBookingsList
 
 	}
 
-	private function getFilterType($filterType) : FilterTypeInterface
+	/**
+	 * @param $filterType
+	 * @return FilterTypeInterface
+	 */
+	private function getFilterType($filterType)
 	{
 		if (null === $filterType) {
 			return new FilterTypeCreation();
@@ -67,12 +71,20 @@ final class ServiceBookingsList
 		return $filterType;
 	}
 
+	/**
+	 * @param PaginationInterface $pagination
+	 * @return int
+	 */
 	private function getPaginationFrom(PaginationInterface $pagination)
 	{
 		// Hotelbeds API defines the first result with index 1, not 0
 		return $pagination->getPage() * $pagination->getPerPage() + 1;
 	}
 
+	/**
+	 * @param PaginationInterface $pagination
+	 * @return int
+	 */
 	private function getPaginationTo(PaginationInterface $pagination)
 	{
 		return $pagination->getPage() * $pagination->getPerPage() + $pagination->getPerPage();

@@ -6,7 +6,10 @@ use StayForLong\HotelBeds\Contracts\FilterTypeInterface;
 
 class FilterTypeCheckin implements FilterTypeInterface
 {
-	public function get(): string
+	/**
+	 * @return string
+	 */
+	public function get()
 	{
 		return 'CHECKIN';
 	}

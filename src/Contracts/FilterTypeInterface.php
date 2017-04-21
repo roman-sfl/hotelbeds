@@ -4,5 +4,6 @@ namespace StayForLong\HotelBeds\Contracts;
 
 interface FilterTypeInterface
 {
-	public function get(): string;
+	/** @return string */
+	public function get();
 }

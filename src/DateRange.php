@@ -23,13 +23,18 @@ class DateRange implements DateRangeInterface
 		$this->endDate   = $endDate;
 	}
 
-
-	public function getStartDate() : DateInterface
+	/**
+	 * @return DateInterface
+	 */
+	public function getStartDate()
 	{
 		return $this->startDate;
 	}
 
-	public function getEndDate() : DateInterface
+	/**
+	 * @return DateInterface
+	 */
+	public function getEndDate()
 	{
 		return $this->endDate;
 

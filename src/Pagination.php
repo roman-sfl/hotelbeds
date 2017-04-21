@@ -24,12 +24,14 @@ class Pagination implements PaginationInterface
 		$this->perPage = $perPage;
 	}
 
-	public function getPage() : int
+	/** @return int */
+	public function getPage()
 	{
 		return $this->page;
 	}
 
-	public function getPerPage() : int
+	/** @return int */
+	public function getPerPage()
 	{
 		return $this->perPage;
 	}

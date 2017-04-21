@@ -6,7 +6,9 @@ namespace StayForLong\HotelBeds\Contracts;
 
 interface DateRangeInterface
 {
-	public function getStartDate() : DateInterface;
+	/** @return DateInterface */
+	public function getStartDate();
 
-	public function getEndDate() : DateInterface;
+	/** @return DateInterface */
+	public function getEndDate();
 }
