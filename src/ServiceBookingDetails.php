@@ -32,8 +32,11 @@ class ServiceBookingDetails
 
 			return $response_bookings;
 		} catch (ServiceRequestException $e) {
-			throw new ServiceBookingsListException($e->getMessage() . "- {$this->request_data}");
+			throw new ServiceBookingDetailsException($e->getMessage() . "- {$this->request_data}");
 		}
 
 	}
+}
+final class ServiceBookingDetailsException extends \ErrorException
+{
 }
