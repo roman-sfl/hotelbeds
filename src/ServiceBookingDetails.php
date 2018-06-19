@@ -30,7 +30,7 @@ class ServiceBookingDetails
 			$response_detail                 = $response['booking'];
 			$response_bookings['raw_response'] = $raw_response;
 
-			return $response_bookings;
+			return $response_detail;
 		} catch (ServiceRequestException $e) {
 			throw new ServiceBookingDetailsException($e->getMessage() . "- {$this->request_data}");
 		}
