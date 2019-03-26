@@ -2,9 +2,12 @@
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\RequestException;
 
 class ServiceRequest
 {
+	private const DEFAULT_CONNECT_TIMEOUT = 0.5;
+
 	/**
 	 * @var array
 	 */
@@ -58,21 +61,22 @@ class ServiceRequest
 	{
 		try {
 			$api_request_url = $this->getRequestUrl();
-			$headers = [
-				'headers' => [
-					"Api-Key"     => $this->api_headers['key'],
-					"X-Signature" => $this->api_headers['signature'],
-					"Accept"      => "application/json",
-					"Content-Type" => "application/json; charset=utf-8",
+			$headers         = [
+				'headers'         => [
+					"Api-Key"         => $this->api_headers['key'],
+					"X-Signature"     => $this->api_headers['signature'],
+					"Accept"          => "application/json",
+					"Content-Type"    => "application/json; charset=utf-8",
 					'Accept-Encoding' => "gzip",
 				],
-				'verify'  => false,
-				'timeout' => $this->timeout,
+				'verify'          => false,
+				'timeout'         => $this->timeout,
+				'connect_timeout' => self::DEFAULT_CONNECT_TIMEOUT,
 			];
 
 			$headers = array_merge($headers, $this->headers);
 
-			$client = new Client();
+			$client   = new Client();
 			$response = $client->request(
 				$method,
 				$api_request_url,
@@ -85,6 +89,9 @@ class ServiceRequest
 		} catch (ClientException $e) {
 			$response = $e->getResponse()->getBody()->getContents();
 			throw new ServiceRequestException( $response );
+		} catch(RequestException $e) {
+			$response = $e->getMessage();
+			throw new ServiceRequestException($response);
 		} catch (\Exception $e) {
 			$response = $e->getMessage();
 			if( method_exists($e->getResponse(), "getBody") )
