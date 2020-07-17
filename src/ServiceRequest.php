@@ -43,25 +43,34 @@ class ServiceRequest
 	 */
 	private $params = [];
 
+	private array $content;
+
 	/**
 	 * @param ApiAuth $api_auth
 	 * @param $an_api_url
 	 * @param array $an_api_params
 	 * @param int $a_timeout
+     * @param array $content
 	 */
-	public function __construct(ApiAuth $api_auth, $an_api_url, $an_api_params = [], $a_timeout = 1)
-	{
+	public function __construct(
+	    ApiAuth $api_auth,
+        $an_api_url,
+        $an_api_params = [],
+        $a_timeout = 1,
+        array $content = []
+    ) {
 		$this->api_headers = $api_auth();
 		$this->url         = $an_api_url;
 		$this->setQueryStringParams($an_api_params);
 		$this->timeout     = $a_timeout;
+		$this->content     = $content;
 	}
 
 	public function send($method = "GET")
 	{
 		try {
 			$api_request_url = $this->getRequestUrl();
-			$headers         = [
+			$options         = [
 				'headers'         => [
 					"Api-Key"         => $this->api_headers['key'],
 					"X-Signature"     => $this->api_headers['signature'],
@@ -74,13 +83,17 @@ class ServiceRequest
 				'connect_timeout' => self::DEFAULT_CONNECT_TIMEOUT,
 			];
 
-			$headers = array_merge($headers, $this->headers);
+			if (!empty($this->content)) {
+			    $this->options['json'] = $this->content;
+            }
+
+			$options = array_merge($options, $this->headers);
 
 			$client   = new Client();
 			$response = $client->request(
 				$method,
 				$api_request_url,
-				$headers,
+				$options,
 				$this->body
 			);
 
