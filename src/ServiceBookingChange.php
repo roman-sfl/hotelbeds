@@ -4,9 +4,10 @@ declare(strict_types=1);
 namespace StayForLong\HotelBeds;
 
 use Exception;
+use StayForLong\HotelBeds\Contracts\ServiceBookingChangeInterface;
 use StayForLong\HotelBeds\Exceptions\ServiceBookingChangeException;
 
-final class ServiceBookingChange
+final class ServiceBookingChange implements ServiceBookingChangeInterface
 {
     /**
      * @param ServiceBookingChangeCommand $command
