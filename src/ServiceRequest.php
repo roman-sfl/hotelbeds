@@ -70,7 +70,7 @@ class ServiceRequest
 	{
 		try {
 			$api_request_url = $this->getRequestUrl();
-			$options         = [
+			$headers         = [
 				'headers'         => [
 					"Api-Key"         => $this->api_headers['key'],
 					"X-Signature"     => $this->api_headers['signature'],
@@ -84,16 +84,16 @@ class ServiceRequest
 			];
 
 			if (!empty($this->content)) {
-			    $this->options['json'] = $this->content;
+			    $headers['json'] = $this->content;
             }
 
-			$options = array_merge($options, $this->headers);
+			$headers = array_merge($headers, $this->headers);
 
 			$client   = new Client();
 			$response = $client->request(
 				$method,
 				$api_request_url,
-				$options,
+				$headers,
 				$this->body
 			);
 
