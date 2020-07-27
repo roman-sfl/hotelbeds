@@ -18,6 +18,7 @@ final class ServiceBookingChange implements ServiceBookingChangeInterface
     {
         try {
             $raw_response = $this->sendUpdateRequest($command);
+            $raw_response = $raw_response->getBody()->getContents();
             $raw_response = mb_convert_encoding($raw_response, 'HTML-ENTITIES', 'UTF-8');
 
             $response                         = json_decode($raw_response, true);
