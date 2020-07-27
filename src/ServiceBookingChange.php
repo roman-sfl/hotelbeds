@@ -17,9 +17,14 @@ final class ServiceBookingChange implements ServiceBookingChangeInterface
     public function handle(ServiceBookingChangeCommand $command): array
     {
         try {
-            $response = $this->sendUpdateRequest($command);
+            $raw_response = $this->sendUpdateRequest($command);
+            $raw_response = mb_convert_encoding($raw_response, 'HTML-ENTITIES', 'UTF-8');
 
-            return $response['booking'];
+            $response                         = json_decode($raw_response, true);
+            $response_booking                 = $response['booking'];
+            $response_booking['raw_response'] = $raw_response;
+
+            return $response_booking;
         } catch (Exception $e) {
             throw new ServiceBookingChangeException($e->getMessage(), $command->bookingVoucher());
         }
